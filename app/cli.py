@@ -968,7 +968,7 @@ def add_admin_user(email):
             email=email,
             admin=True
         )
-        user.set_password(os.urandom(24))
+        user.set_password("123456789012")#os.urandom(24))
         db.session.add(user)
         db.session.commit()
 

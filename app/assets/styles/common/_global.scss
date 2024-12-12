@@ -42,6 +42,17 @@ a {
   width: 200px !important;
 }
 
+.toegankelijk-filter-tabel {
+  display: grid;
+  grid-template-columns:1fr 25px;
+
+  label, input {
+    align-self: center;
+    border-bottom: 1px dotted gray;
+    padding: 5px 0;
+  }
+}
+
 .background-lighter-grey {
   background-color: $lighter-grey;
 }

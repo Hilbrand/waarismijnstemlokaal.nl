@@ -24,21 +24,17 @@
 
   <link rel="stylesheet" href="/static/dist/styles/main.css" />
 
-  <!-- Matomo -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32274817-14"></script>
   <script>
-    var _paq = window._paq = window._paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="https://analytics.openstate.eu/";
-      _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', '12']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-    })();
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-32274817-14', {
+      cookie_flags: 'max-age=7200;secure;samesite=none',
+      anonymize_ip: true
+    });
   </script>
-  <!-- End Matomo Code -->
 
   <!-- H1ML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -54,7 +50,7 @@
     <nav class="navbar navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand visible-xs-inline img-responsive" href="/">
+          <a class="navbar-brand img-responsive" href="/">
             <img src="/static/dist/images/logo.svg" alt="Waar is mijn stemlokaal logo">
           </a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -79,14 +75,13 @@
     </nav>
   </header>
 
-  <main style="margin-top: 50px;">
+  <main>
     {% include 'flashed-messages.html' %}
     {#
     <div class="text-center" style="padding-bottom: 20px;">
       <span class="text-red">Deze website toont nu nog de stembureaus van de Tweede Kamerverkiezingen van 22 november 2023. Voor de aankomende Europese Parlementsverkiezingen van 6 juni 2024 zullen alle stembureaus weer worden bijgewerkt. Gemeenten krijgen daarvoor begin maart een uitnodiging.</span>
     </div>
     #}
-    {#
     <div class="text-center" style="padding-bottom: 20px;">
       {% if number_of_published_gemeenten %}
         <p>Op dit moment hebben {{ number_of_published_gemeenten }} van de in totaal {{ alle_gemeenten | length - 5 }} (bijzondere) gemeenten hun stembureaus voor de Europese Parlementsverkiezingen van 6 juni 2024 gepubliceerd. De rest wordt nog tot uiterlijk twee weken voor de verkiezingen toegevoegd.</p>
@@ -94,7 +89,6 @@
         <p>Nog niet alle gemeenten hebben de stembureaus voor de Europese Parlementsverkiezingen van 6 juni 2024 aangeleverd. Deze worden nog tot uiterlijk twee weken voor de verkiezingen toegevoegd.</p>
       {% endif %}
     </div>
-    #}
     {% block content %}{% endblock %}
   </main>
 

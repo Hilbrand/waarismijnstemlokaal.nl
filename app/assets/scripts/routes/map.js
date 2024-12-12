@@ -21,18 +21,19 @@ var gehandicaptentoilet_labels = {
 }
 
 var toegankelijkheidsfilters = [
-  ['Toegankelijk voor mensen met een lichamelijke beperking', 'toegankelijk', '.toegankelijk-filter'],
-  ['Toegankelijke ov-halte', 'toegankelijke-ov-halte', '.toegankelijke-ov-halte-filter'],
-  ['Gehandicaptentoilet', 'gehandicaptentoilet', '.gehandicaptentoilet-filter'],
-  ['Host', 'host', '.host-filter'],
-  ['Geleidelijnen', 'geleidelijnen', '.geleidelijnen-filter'],
-  ['Stemmal met audio-ondersteuning', 'stemmal-met-audio-ondersteuning', '.stemmal-met-audio-ondersteuning-filter'],
-  ['Kandidatenlijst in braille', 'kandidatenlijst-in-braille', '.kandidatenlijst-in-braille-filter'],
-  ['Kandidatenlijst met grote letters', 'kandidatenlijst-met-grote-letters', '.kandidatenlijst-met-grote-letters-filter'],
-  ['Gebarentolk (NGT)', 'gebarentolk-ngt', '.gebarentolk-ngt-filter'],
-  ['Gebarentalig stembureaulid (NGT)', 'gebarentalig-stembureaulid-ngt', '.gebarentalig-stembureaulid-ngt-filter'],
-  ['Akoestiek geschikt voor slechthorenden', 'akoestiek', '.akoestiek-filter'],
-  ['Prikkelarm', 'prikkelarm', '.prikkelarm-filter']
+  ['Toegankelijk voor mensen met een lichamelijke beperking', 'toegankelijk', '#toegankelijk-filter'],
+  ['Toegankelijke ov-halte', 'toegankelijke-ov-halte', '#toegankelijke-ov-halte-filter'],
+  ['Gehandicaptentoilet', 'gehandicaptentoilet', '#gehandicaptentoilet-filter'],
+  ['Host', 'host', '#host-filter'],
+  ['Geleidelijnen Buiten', 'geleidelijnen-buiten', '#geleidelijnen-buiten-filter'],
+  ['Geleidelijnen Binnen', 'geleidelijnen-binnen', '#geleidelijnen-binnen-filter'],
+  ['Stemmal met audio-ondersteuning', 'stemmal-met-audio-ondersteuning', '#stemmal-met-audio-ondersteuning-filter'],
+  ['Kandidatenlijst in braille', 'kandidatenlijst-in-braille', '#kandidatenlijst-in-braille-filter'],
+  ['Kandidatenlijst met grote letters', 'kandidatenlijst-met-grote-letters', '#kandidatenlijst-met-grote-letters-filter'],
+  ['Gebarentolk (NGT)', 'gebarentolk-ngt', '#gebarentolk-ngt-filter'],
+  ['Gebarentalig stembureaulid (NGT)', 'gebarentalig-stembureaulid-ngt', '#gebarentalig-stembureaulid-ngt-filter'],
+  ['Akoestiek geschikt voor slechthorenden', 'akoestiek', '#akoestiek-filter'],
+  ['Prikkelarm', 'prikkelarm', '#prikkelarm-filter']
 ]
 
 function create_optional_fields(stembureau) {
@@ -451,6 +452,7 @@ export default {
           StembureausApp.filtered_locations.forEach(function (loc) {
             var this_filter = filters[filter[1]];
             if (this_filter) {
+              // console.log("this_filter:", this_filter, loc[filter[0]]);
               if (this_filter === '') {
                 temp_filtered_locations.push(loc);
               } else if (loc[filter[0]] === this_filter) {
@@ -460,6 +462,7 @@ export default {
               temp_filtered_locations.push(loc);
             }
           });
+          console.log(filter[1], temp_filtered_locations)
           StembureausApp.filtered_locations = temp_filtered_locations;
         });
       };
@@ -642,8 +645,9 @@ export default {
         //'dag': $('#dag-filter').val(),
         'openingstijden': $('#openingstijden-filter').val(),
       };
-
+      console.log("---FILTER---");
       toegankelijkheidsfilters.forEach((filter) => {
+        filter[1] === 'toegankelijk' && console.log("FILTER:", filter[2], $(filter[2]), $(filter[2]).val())
         filters[filter[1]] = $(filter[2]).val();
       });
 
@@ -652,17 +656,19 @@ export default {
       // have the same value when one of them is changed.
       toegankelijkheidsfilters.forEach((filter) => {
         $(filter[2]).change(function() {
-          $(filter[2]).val($(this).val());
+//          console.log("change:", filter, $(filter[2]).val($(this).val()), $(this).val());
+//          $(filter[2]).val($(this).val());
         });
       });
-
+      toegankelijkheidsfilters.forEach((f) => console.log(f));
       // Apply updates to the map if a filter is clicked
-      $('.filter').change(function() {
+      toegankelijkheidsfilters.forEach((f) => $(f[2]).change(function() {
         //filters['dag'] = $('#dag-filter').val();
         filters['openingstijden'] = $('#openingstijden-filter').val();
 
         toegankelijkheidsfilters.forEach((filter) => {
-          filters[filter[1]] = $(filter[2]).val();
+          filter[1] === 'toegankelijk' && console.log("filter:", filter, $(filter[2]).val(), filters);
+          filters[filter[1]] = $(filter[2] + ":checked").val();
         });
 
         StembureausApp.filter_map(filters);
@@ -671,7 +677,7 @@ export default {
         if (document.getElementById('form-search')) {
             StembureausApp.search(get_query());
         }
-      });
+      }));
 
       // Default view: based on which option is selected by default in map.html
       StembureausApp.filter_map(filters);

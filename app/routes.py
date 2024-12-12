@@ -516,7 +516,7 @@ def gemeente_logout():
 
 
 @app.route(
-    "/gemeente-selectie",
+    "/gemeente/selectie",
     methods=['GET', 'POST']
 )
 @login_required
@@ -543,7 +543,7 @@ def gemeente_selectie():
             return redirect(url_for('gemeente_stemlokalen_dashboard'))
 
     return render_template(
-        'gemeente-selectie.html',
+        'gemeente/selectie.html',
         gemeente_selection_form=gemeente_selection_form
     )
 
